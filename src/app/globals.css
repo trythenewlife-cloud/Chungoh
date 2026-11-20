@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* 청오 디자인 토큰: 네이처 테크 (딥그린 + 오프화이트 + 라임 포인트) */
+:root {
+  --bg: #f5f7f0;
+  --surface: #ffffff;
+  --surface-2: #eef2e6;
+  --ink: #0f1f17;
+  --muted: #56675b;
+  --line: #dfe6d6;
+  --brand: #1d5a37;
+  --brand-ink: #ffffff;
+  --brand-soft: #e3efe2;
+  --accent: #c4f06a;
+  --accent-ink: #13240f;
+  --danger: #b42318;
+  --warn: #b45309;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0a120d;
+    --surface: #111c15;
+    --surface-2: #17251c;
+    --ink: #e6efe7;
+    --muted: #98ab9e;
+    --line: #22332a;
+    --brand: #6fcf8f;
+    --brand-ink: #07140c;
+    --brand-soft: #173022;
+    --accent: #c4f06a;
+    --accent-ink: #13240f;
+    --danger: #f97066;
+    --warn: #fdb022;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0a120d;
+  --surface: #111c15;
+  --surface-2: #17251c;
+  --ink: #e6efe7;
+  --muted: #98ab9e;
+  --line: #22332a;
+  --brand: #6fcf8f;
+  --brand-ink: #07140c;
+  --brand-soft: #173022;
+  --accent: #c4f06a;
+  --accent-ink: #13240f;
+  --danger: #f97066;
+  --warn: #fdb022;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-danger: var(--danger);
+  --color-warn: var(--warn);
+  --font-sans: var(--font-pretendard), system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-pretendard), system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-[15px] font-semibold transition active:scale-[.98] disabled:opacity-50 disabled:pointer-events-none;
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+  .btn-primary {
+    @apply btn bg-brand text-brand-ink hover:brightness-110;
+  }
+  .btn-accent {
+    @apply btn bg-accent text-accent-ink hover:brightness-95;
+  }
+  .btn-ghost {
+    @apply btn border border-line bg-surface text-ink hover:bg-surface-2;
+  }
+  .card {
+    @apply rounded-3xl border border-line bg-surface;
+  }
+  .input {
+    @apply w-full rounded-xl border border-line bg-surface px-4 py-3 text-[16px] text-ink outline-none placeholder:text-muted/70 focus:border-brand focus:ring-2 focus:ring-brand/20;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-semibold text-ink;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-surface px-3 py-1 text-sm text-muted;
+  }
+  .eyebrow {
+    @apply text-sm font-semibold tracking-wide text-brand;
+  }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.rise { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+.rise-2 { animation-delay: .12s; }
+.rise-3 { animation-delay: .24s; }
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+.sway { transform-origin: bottom center; animation: sway 4s ease-in-out infinite; }
+
+@keyframes pulse-dot {
+  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 70%, transparent); }
+  100% { box-shadow: 0 0 0 10px transparent; }
+}
+.live-dot { animation: pulse-dot 1.6s infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .sway, .live-dot { animation: none; }
+  html { scroll-behavior: auto; }
+}
