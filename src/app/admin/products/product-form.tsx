@@ -17,7 +17,7 @@ export function ProductForm({ p }: { p?: Product }) {
       {p && <input type="hidden" name="id" value={p.id} />}
       <div className="grid gap-4 sm:grid-cols-2">
         <F label="상품명" name="name" defaultValue={d("name", p?.name)} required />
-        <F label="슬러그 (URL)" name="slug" defaultValue={d("slug", p?.slug)} placeholder="codm-8102" required />
+        <F label="슬러그 (URL)" name="slug" defaultValue={d("slug", p?.slug)} placeholder="codm-81024" required />
         <div>
           <label className="label" htmlFor="category">분류</label>
           <select id="category" name="category" defaultValue={d("category", p?.category ?? "opener")} className="input">

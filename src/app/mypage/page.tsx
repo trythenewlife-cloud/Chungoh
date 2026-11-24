@@ -6,7 +6,7 @@ import { LogOut } from "lucide-react";
 import { db, schema } from "@/db";
 import { requireUser } from "@/lib/session";
 import { logout } from "@/app/actions/auth";
-import { quoteStatusLabel } from "@/lib/catalog";
+import { asStatusLabel, quoteStatusLabel } from "@/lib/catalog";
 import { StatusBadge } from "@/components/status-badge";
 import { won } from "@/lib/pricing";
 import { CancelButton } from "./cancel-button";
@@ -30,6 +30,7 @@ async function Content() {
     ? await db.select().from(schema.orderItems).where(inArray(schema.orderItems.orderId, orders.map((o) => o.id)))
     : [];
   const quotes = await db.select().from(schema.quotes).where(eq(schema.quotes.userId, user.id)).orderBy(desc(schema.quotes.createdAt)).limit(20);
+  const asList = await db.select().from(schema.asRequests).where(eq(schema.asRequests.userId, user.id)).orderBy(desc(schema.asRequests.createdAt)).limit(20);
   const visible = orders.filter((o) => o.status !== "pending");
 
   return (
@@ -90,6 +91,26 @@ async function Content() {
                 </div>
                 <p className="mt-2 font-semibold">{q.crop} · {q.areaM2.toLocaleString()}㎡ · {q.greenhouseType}</p>
                 <p className="text-sm text-muted">{q.needs.join(", ")}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className="mt-10">
+        <h2 className="text-xl font-bold">A/S 신청</h2>
+        {asList.length === 0 ? (
+          <p className="card mt-3 p-8 text-center text-muted">A/S 신청 내역이 없습니다. <Link href="/as" className="font-semibold text-brand">A/S 신청하기</Link></p>
+        ) : (
+          <ul className="mt-3 grid gap-3 md:grid-cols-2">
+            {asList.map((r) => (
+              <li key={r.id} className="card p-5">
+                <div className="flex items-center justify-between text-sm text-muted">
+                  <span>{r.requestNo}</span>
+                  <span className="rounded-full bg-brand-soft px-2.5 py-0.5 font-semibold text-brand">{asStatusLabel[r.status]}</span>
+                </div>
+                <p className="mt-2 font-semibold">{r.issueType}{r.productModel && <> · {r.productModel}</>}</p>
+                <p className="line-clamp-2 text-sm text-muted">{r.message}</p>
               </li>
             ))}
           </ul>

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { LayoutDashboard, Package, Truck, ClipboardList, Users, Store } from "lucide-react";
+import { LayoutDashboard, Package, Truck, ClipboardList, Users, Store, Settings, Wrench } from "lucide-react";
 
 export const metadata: Metadata = { title: "관리자", robots: { index: false, follow: false } };
 
@@ -9,7 +9,9 @@ const nav = [
   { href: "/admin/orders", label: "주문", Icon: Truck },
   { href: "/admin/products", label: "상품", Icon: Package },
   { href: "/admin/quotes", label: "견적", Icon: ClipboardList },
+  { href: "/admin/as", label: "A/S", Icon: Wrench },
   { href: "/admin/members", label: "회원", Icon: Users },
+  { href: "/admin/settings", label: "설정", Icon: Settings },
 ];
 
 export default function AdminLayout({ children }: LayoutProps<"/admin">) {

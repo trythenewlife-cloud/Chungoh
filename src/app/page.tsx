@@ -20,7 +20,8 @@ import { db, schema } from "@/db";
 import { GreenhouseArt } from "@/components/greenhouse-art";
 import { LiveClimate } from "@/components/live-climate";
 import { ProductCard, ProductCardSkeleton } from "@/components/product-card";
-import { company } from "@/lib/catalog";
+import { VideoGrid } from "@/components/video-grid";
+import { company, videos } from "@/lib/catalog";
 
 export default function Home() {
   return (
@@ -29,6 +30,13 @@ export default function Home() {
       <Stats />
       <Bento />
       <Process />
+      <section className="container-x mt-24" id="videos">
+        <p className="eyebrow">제품 동영상</p>
+        <h2 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">개폐기와 제어시스템을 영상으로 보세요</h2>
+        <div className="mt-8">
+          <VideoGrid videos={videos} />
+        </div>
+      </section>
       <section className="container-x mt-24">
         <div className="mb-8 flex items-end justify-between gap-4">
           <div>
@@ -120,7 +128,7 @@ function Bento() {
         <Link href="/products?category=opener" className="card group relative overflow-hidden p-7 md:col-span-2 md:row-span-2">
           <PanelTopOpen className="h-10 w-10 text-brand" strokeWidth={1.5} />
           <h3 className="mt-6 text-2xl font-bold">자동개폐기</h3>
-          <p className="mt-2 max-w-sm text-muted">측창·천창을 온도에 맞춰 자동으로 열고 닫는 청오의 대표 제품. CODM 8102 시리즈.</p>
+          <p className="mt-2 max-w-sm text-muted">비닐·부직포·보온덮개·수평커텐을 온도에 맞춰 자동으로 열고 닫는 청오의 대표 제품. CODM·COAM 시리즈.</p>
           <span className="mt-6 inline-flex items-center gap-1 font-semibold text-brand">제품 보기 <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
           <svg aria-hidden viewBox="0 0 200 120" className="absolute -bottom-6 -right-6 w-64 opacity-70">
             <path d="M10 110 Q100 -10 190 110" fill="none" stroke="var(--accent)" strokeWidth="10" strokeLinecap="round" />
@@ -129,18 +137,18 @@ function Bento() {
         </Link>
         <Link href="/products?category=controller" className="card group p-6 md:col-span-2">
           <Cpu className="h-8 w-8 text-brand" strokeWidth={1.5} />
-          <h3 className="mt-4 text-xl font-bold">개폐기 컨트롤 박스</h3>
-          <p className="mt-1 text-muted">4CH·8CH 온도 연동, 강우 시 자동 닫힘.</p>
+          <h3 className="mt-4 text-xl font-bold">제어판넬·하우스 컨트롤러</h3>
+          <p className="mt-1 text-muted">목표온도 스텝제어, 우적 시 자동 닫힘. COCB·FHC 시리즈.</p>
         </Link>
         <Link href="/solutions#nutrient" className="card group p-6">
           <Droplets className="h-8 w-8 text-brand" strokeWidth={1.5} />
-          <h3 className="mt-4 text-xl font-bold">양액제어</h3>
-          <p className="mt-1 text-muted">EC·pH 자동 조제.</p>
+          <h3 className="mt-4 text-xl font-bold">양액 공급시스템</h3>
+          <p className="mt-1 text-muted">제작·시공.</p>
         </Link>
         <Link href="/solutions#climate" className="group rounded-3xl bg-brand p-6 text-brand-ink">
           <Network className="h-8 w-8 text-accent" strokeWidth={1.5} />
           <h3 className="mt-4 text-xl font-bold">복합환경제어</h3>
-          <p className="mt-1 opacity-80">스마트폰 원격 관리.</p>
+          <p className="mt-1 opacity-80">웹 모니터링 원격 관리.</p>
         </Link>
         <Link href="/solutions#build" className="card group p-6 md:col-span-2">
           <Wrench className="h-8 w-8 text-brand" strokeWidth={1.5} />

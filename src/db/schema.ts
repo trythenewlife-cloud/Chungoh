@@ -123,6 +123,25 @@ export const quotes = pgTable("quotes", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const asStatuses = ["received", "checking", "repairing", "done"] as const;
+export type AsStatus = (typeof asStatuses)[number];
+
+// A/S 신청 (기존 사이트 A/S신청·A/S관리 게시판 대체). 목록은 공개하지 않는다.
+export const asRequests = pgTable("as_requests", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  requestNo: text("request_no").notNull().unique(),
+  userId: uuid("user_id").references(() => users.id),
+  name: text("name").notNull(),
+  phoneEnc: text("phone_enc").notNull(),
+  region: text("region").notNull(),
+  productModel: text("product_model"),
+  issueType: text("issue_type").notNull(),
+  message: text("message").notNull(),
+  status: text("status", { enum: asStatuses }).notNull().default("received"),
+  adminMemo: text("admin_memo"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const cases = pgTable("cases", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
@@ -141,6 +160,13 @@ export const adminLogs = pgTable("admin_logs", {
   action: text("action").notNull(),
   target: text("target"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+// 관리자 화면에서 바꾸는 사이트 설정 (key/value)
+export const siteSettings = pgTable("site_settings", {
+  key: text("key").primaryKey(),
+  value: text("value").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
 export type Product = typeof products.$inferSelect;

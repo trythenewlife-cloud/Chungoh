@@ -13,11 +13,11 @@ const customerTypes = [
   { v: "가정·취미 원예", Icon: Flower2 },
 ] as const;
 const ghTypes = ["단동 비닐", "연동 비닐", "유리온실", "신축 예정", "기타"] as const;
-const needOptions = ["자동개폐기", "개폐기 컨트롤 박스", "양액제어", "복합환경제어", "센서·원격 모니터링", "온실 신축·시공", "A/S·점검", "지원사업 상담"];
+const needOptions = ["자동개폐기", "제어판넬·컨트롤러", "양액 공급시스템", "복합환경제어", "센서·원격 모니터링", "온실 자동화 시공", "A/S·점검", "지원사업 상담"];
 const productNeed: Record<string, string> = {
   "climate-controller": "복합환경제어",
-  "nutrient-system": "양액제어",
-  "greenhouse-build": "온실 신축·시공",
+  "nutrient-system": "양액 공급시스템",
+  "greenhouse-build": "온실 자동화 시공",
 };
 
 export function QuoteWizard() {

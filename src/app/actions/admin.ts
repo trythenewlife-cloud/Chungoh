@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { db, schema } from "@/db";
 import { requireAdmin, logAdmin } from "@/lib/session";
 import { cancelOrderInternal } from "@/lib/orders";
-import { orderStatuses, quoteStatuses } from "@/db/schema";
+import { asStatuses, orderStatuses, quoteStatuses } from "@/db/schema";
 
 export type AdminState = { error?: string; ok?: boolean; values?: Record<string, string>; ts?: number } | undefined;
 
@@ -140,4 +140,42 @@ export async function updateQuote(_: AdminState, fd: FormData): Promise<AdminSta
   await logAdmin(admin.id, `quote.${v.status}`, v.id);
   revalidatePath("/admin/quotes");
   return { ok: true };
+}
+
+const AsUpdate = z.object({
+  id: z.string().uuid(),
+  status: z.enum(asStatuses),
+  adminMemo: z.string().trim().max(2000),
+});
+
+export async function updateAsRequest(_: AdminState, fd: FormData): Promise<AdminState> {
+  const admin = await requireAdmin();
+  const parsed = AsUpdate.safeParse({ id: fd.get("id"), status: fd.get("status"), adminMemo: fd.get("adminMemo") ?? "" });
+  if (!parsed.success) return { error: "입력값 오류" };
+  const v = parsed.data;
+  await db.update(schema.asRequests).set({ status: v.status, adminMemo: v.adminMemo || null }).where(eq(schema.asRequests.id, v.id));
+  await logAdmin(admin.id, `as.${v.status}`, v.id);
+  revalidatePath("/admin/as");
+  return { ok: true };
+}
+
+// 네이버 지도 Client ID. 빈 값이면 삭제되어 회사소개 지도가 숨겨진다.
+const NaverMapInput = z.string().trim().regex(/^[A-Za-z0-9_-]{0,64}$/, "Client ID 는 영문, 숫자, -, _ 만 사용");
+
+export async function saveMapSettings(_: AdminState, fd: FormData): Promise<AdminState> {
+  const admin = await requireAdmin();
+  const parsed = NaverMapInput.safeParse(fd.get("naverMapClientId") ?? "");
+  if (!parsed.success) return { error: parsed.error.issues[0].message, ts: Date.now() };
+  const key = "naver_map_client_id";
+  if (parsed.data) {
+    await db
+      .insert(schema.siteSettings)
+      .values({ key, value: parsed.data })
+      .onConflictDoUpdate({ target: schema.siteSettings.key, set: { value: parsed.data, updatedAt: new Date() } });
+  } else {
+    await db.delete(schema.siteSettings).where(eq(schema.siteSettings.key, key));
+  }
+  await logAdmin(admin.id, parsed.data ? "settings.map.enable" : "settings.map.disable");
+  revalidatePath("/about");
+  return { ok: true, ts: Date.now() };
 }

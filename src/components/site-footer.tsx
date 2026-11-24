@@ -20,6 +20,7 @@ export function SiteFooter() {
           </ul>
           <ul className="space-y-2">
             <li><Link href="/quote" className="hover:text-brand">견적문의</Link></li>
+            <li><Link href="/as" className="hover:text-brand">A/S 신청</Link></li>
             <li><Link href="/orders/lookup" className="hover:text-brand">비회원 주문조회</Link></li>
             <li><Link href="/terms" className="hover:text-brand">이용약관</Link></li>
             <li><Link href="/privacy" className="font-bold hover:text-brand">개인정보처리방침</Link></li>
@@ -32,7 +33,7 @@ export function SiteFooter() {
             상호 {company.name} · 대표 {company.ceo} · 주소 {company.address}
           </p>
           <p>
-            사업자등록번호 {company.bizNo} · 통신판매업 신고 {company.mailOrderNo} · 전화 {company.tel} · 이메일 {company.email}
+            사업자등록번호 {company.bizNo} · 통신판매업 신고 {company.mailOrderNo} · 전화 {company.tel} · 팩스 {company.fax} · 이메일 {company.email}
           </p>
           <p>© {company.nameEn}</p>
         </div>

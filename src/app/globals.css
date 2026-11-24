@@ -15,6 +15,7 @@
   --accent-ink: #13240f;
   --danger: #b42318;
   --warn: #b45309;
+  --nav-active: #0f1f17;
   color-scheme: light;
 }
 
@@ -33,10 +34,12 @@
     --accent-ink: #13240f;
     --danger: #f97066;
     --warn: #fdb022;
+    --nav-active: #ffffff;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
+  --nav-active: #ffffff;
   --bg: #0a120d;
   --surface: #111c15;
   --surface-2: #17251c;
