@@ -55,6 +55,10 @@ npm run dev        # http://localhost:3000
 
 테스트: `npm test` (암호화·가격 계산 단위 테스트 10개)
 
+## 배포 (상시 켜 둔 Windows PC)
+
+[docs/DEPLOY-PC.md](docs/DEPLOY-PC.md): PostgreSQL, 운영 빌드, Cloudflare 터널, 부팅 시 자동 실행, 업데이트, 백업.
+
 ## 배포 (Vercel + Supabase)
 
 1. **Supabase**: 새 프로젝트 생성 (리전 Seoul `ap-northeast-2`). Project Settings → Database → Connection string 에서 **Transaction pooler** 주소(포트 6543)를 복사합니다.

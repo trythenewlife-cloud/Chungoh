@@ -380,6 +380,7 @@ async function main() {
   await db.delete(schema.orders);
   await db.delete(schema.quotes);
   await db.delete(schema.adminLogs);
+  await db.delete(schema.asRequests);
   await db.delete(schema.products);
   await db.delete(schema.cases);
   await db.delete(schema.users);

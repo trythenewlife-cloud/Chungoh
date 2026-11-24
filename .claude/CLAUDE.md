@@ -19,5 +19,6 @@ Dev DB: local postgres 16 (service postgresql start), npm run db:push && npm run
 Theme: data-theme on <html> set by src/lib/theme.ts head script + ThemeToggle; --nav-active token. Header usePathname lives inside <Suspense>.
 Map: about page shows src/components/naver-map.tsx only when site_settings 'naver_map_client_id' is set (admin → 설정, src/lib/settings.ts).
 A/S: /as form → as_requests (phone encrypted, honeypot "website"), admin /admin/as, mypage list. List is never public.
+Deploy: always-on Windows PC per docs/DEPLOY-PC.md (scripts/windows/*.ps1, Task Scheduler, cloudflared). npm run admin:password changes admin pw. User terminal blocks npm.ps1: use npm.cmd.
 Cloud session proxy blocks tosspayments.com and chung-oh.co.kr (CONNECT 403)
 Local Windows PC: repo at D:\청오 (E: is FAT32, too slow). Postgres 16 Windows service, DB/user chungoh/chungoh. .env.local uses Toss public docs test keys; Toss test PIN 000000
