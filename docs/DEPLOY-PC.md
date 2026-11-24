@@ -24,7 +24,7 @@ git checkout claude/elegant-pascal-82v27y
 npm.cmd ci
 ```
 
-DB 계정과 DB 만들기 (비밀번호는 새로 정합니다):
+DB 계정과 DB 만들기. `새DB비밀번호` 는 직접 정한 영문·숫자 비밀번호로 바꿉니다 (한글·특수문자는 3단계 DATABASE_URL 에서 오류가 납니다). "postgres 사용자의 암호" 를 물으면 PostgreSQL 설치 때 정한 비밀번호를 입력합니다:
 
 ```powershell
 & "C:\Program Files\PostgreSQL\16\bin\psql.exe" -U postgres -c "CREATE USER chungoh WITH PASSWORD '새DB비밀번호';" -c "CREATE DATABASE chungoh OWNER chungoh;"
