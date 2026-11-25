@@ -100,8 +100,28 @@ Select-String -Path logs\tunnel.log -Pattern 'https://.*trycloudflare.com' | Sel
 Restart-Computer
 ```
 
-6. **확인 후 정리**: Tunnels 화면에서 상태가 HEALTHY 인지, `https://www.chung-oh.co.kr` 이 열리는지, 회사 메일 송수신이 되는지 확인합니다. 그다음 카페24 웹호스팅을 해지합니다. 메일을 계속 쓰면 메일 호스팅은 유지합니다.
+6. **확인 후 정리**: Tunnels 화면에서 상태가 HEALTHY 인지, `https://www.chung-oh.co.kr` 이 열리는지, 회사 메일 송수신이 되는지 확인합니다. 원복에 대비해 카페24 웹호스팅은 1~3개월 유지한 뒤 해지합니다. 메일을 계속 쓰면 메일 호스팅은 유지합니다.
 7. **주소 등록**: NCP 콘솔 지도 앱의 Web 서비스 URL 에 `https://chung-oh.co.kr`, `https://www.chung-oh.co.kr` 을 추가합니다. 토스 라이브 키 신청 때 이 주소를 사이트 주소로 씁니다.
+
+### 비상시 기존 카페24 홈페이지로 원복
+
+카페24 웹호스팅이 계약 중이고 카페24 DNS 레코드가 남아 있을 때만 됩니다. 해지 후에는 기존 홈페이지 파일이 없어 원복할 수 없습니다.
+
+- **빠른 원복 (보통 5분 안)**: Cloudflare → DNS 에서 Public Hostname 이 만든 `chung-oh.co.kr`, `www` 레코드를 지우고 아래를 추가합니다. 메일 레코드는 그대로 둡니다. 다시 새 사이트로 돌릴 때는 이 2개를 지우고 터널 Public Hostname 을 다시 저장합니다.
+
+| 종류 | 이름 | 값 | 프록시 |
+|---|---|---|---|
+| A | `chung-oh.co.kr` | `211.41.79.43` | DNS only |
+| CNAME | `www` | `chung-oh.co.kr` | DNS only |
+
+- **완전 원복 (몇 분 ~ 48시간)**: 후이즈 → 네임서버 변경에서 아래 4개로 되돌립니다. 반영되는 동안은 접속하는 사람마다 새 사이트와 기존 사이트가 섞여 보입니다.
+
+```
+ns1.cafe24.com
+ns2.cafe24.com
+ns1.cafe24.co.kr
+ns2.cafe24.co.kr
+```
 
 ## 6. 새 코드 반영
 
